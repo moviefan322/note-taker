@@ -76,3 +76,30 @@ body {
   padding: 20px;
   cursor: pointer;
 }
+
+/* Media query for phones */
+@media only screen and (max-width: 600px) {
+  .note-title {
+    font-size: 2rem;
+  }
+
+  .note-textarea {
+    height: calc(100% - 120px);
+  }
+
+  .icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .icons i {
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 1.2rem;
+  }
+
+  .list-container .card {
+    height: auto;
+  }
+}
