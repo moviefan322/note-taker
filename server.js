@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const db = require("./db/db.json");
 const { writeFile } = require("fs");
+const { v4: uuidv4 } = require("uuid");
 
 //DATA
 
@@ -43,6 +44,7 @@ app.get("/api/notes/:index", (req, res) => {
 app.post("/api/notes", (req, res) => {
   const { title, text } = req.body;
   const newNote = {
+    id: uuidv4(),
     title,
     text,
   };
