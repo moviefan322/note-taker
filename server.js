@@ -17,14 +17,14 @@ app.use(express.urlencoded({ extended: false }));
 
 //ROUTES
 // static folder
-// app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 //homepage
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 //notes page
-app.get("/notes.html", (req, res) => {
+app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
 
@@ -47,13 +47,26 @@ app.post("/api/notes", (req, res) => {
     text,
   };
   db.push(newNote);
-  writeFile("./db/db.json", JSON.stringify(db), (err) => {
+  writeFile("./db/db.json", JSON.stringify(db, null, 2), (err) => {
     if (err) console.log(err);
     else {
       console.log("File written successfully\n");
     }
   });
   res.json(db);
+});
+
+//delete note
+app.delete("/api/notes/:index", (req, res) => {
+  const { index } = req.params;
+  db.splice(index, 1);
+  writeFile("./db/db.json", JSON.stringify(db, null, 2), (err) => {
+    if (err) console.log(err);
+    else {
+      console.log("File written successfully\n");
+    }
+  });
+  res.json(db[Number(index)] + "has been deleted");
 });
 
 //START SERVER
