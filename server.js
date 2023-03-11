@@ -60,15 +60,19 @@ app.post("/api/notes", (req, res) => {
 
 //delete note
 app.delete("/api/notes/:id", (req, res) => {
-  const { index } = req.params;
-  db.splice(index, 1);
-  writeFile("./db/db.json", JSON.stringify(db, null, 2), (err) => {
-    if (err) console.log(err);
-    else {
-      console.log("File deleted successfully\n");
+  for (let i = 0; i < db.length; i++) {
+    if (db[i].id === req.params.id) {
+      const deletedTodo = db[i];
+      db.splice(i, 1);
+      writeFile("./db/db.json", JSON.stringify(db, null, 2), (err) => {
+        if (err) console.log(err);
+        else {
+          console.log("File deleted successfully\n");
+        }
+      });
+      res.json("item has been deleted");
     }
-  });
-  res.json(db[Number(index)] + "has been deleted");
+  }
 });
 
 //START SERVER
