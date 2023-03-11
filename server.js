@@ -59,13 +59,13 @@ app.post("/api/notes", (req, res) => {
 });
 
 //delete note
-app.delete("/api/notes/:index", (req, res) => {
+app.delete("/api/notes/:id", (req, res) => {
   const { index } = req.params;
   db.splice(index, 1);
   writeFile("./db/db.json", JSON.stringify(db, null, 2), (err) => {
     if (err) console.log(err);
     else {
-      console.log("File written successfully\n");
+      console.log("File deleted successfully\n");
     }
   });
   res.json(db[Number(index)] + "has been deleted");
